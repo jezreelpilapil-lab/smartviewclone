@@ -418,6 +418,18 @@
             font-size: 15px;
         }
 
+        .version-info {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #666;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            z-index: 1000;
+        }
+
         /* Overlay */
         .overlay {
             position: fixed;
@@ -559,6 +571,9 @@
     <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-    <script src="app.js"></script>
+    <!-- Version Info -->
+    <div class="version-info">v1.1 • 50 titles loaded</div>
+
+    <script src="app.js?v=1.1"></script>
 </body>
 </html>

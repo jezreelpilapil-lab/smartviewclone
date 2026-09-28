@@ -1,7 +1,10 @@
-// SmartView - Movie & TV Streaming Browser
+// SmartView - Movie & TV Streaming Browser v1.1
 let currentVideo = null;
 let isPlaying = false;
 let currentTab = 'home';
+
+console.log('SmartView Web App v1.1 loaded');
+console.log('Content database loaded:', Object.keys(contentDatabase || {}).length > 0 ? 'YES' : 'NO');
 
 // Sample content database (in real app, this would come from an API)
 const contentDatabase = {
@@ -274,10 +277,15 @@ function searchContent(query) {
             allContent.push(...contentDatabase[category]);
         } else {
             for (let subcat in contentDatabase[category]) {
-                allContent.push(...contentDatabase[category][subcat]);
+                if (Array.isArray(contentDatabase[category][subcat])) {
+                    allContent.push(...contentDatabase[category][subcat]);
+                }
             }
         }
     }
+    
+    console.log('Total content items:', allContent.length);
+    console.log('Searching for:', searchTerm);
     
     // Filter content by search term
     const results = allContent.filter(item => 
@@ -285,6 +293,8 @@ function searchContent(query) {
         item.genre.toLowerCase().includes(searchTerm) ||
         item.year.includes(searchTerm)
     );
+    
+    console.log('Results found:', results.length);
     
     // Display search results
     displaySearchResults(query, results);
