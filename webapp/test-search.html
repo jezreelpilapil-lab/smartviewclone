@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartView Search Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .test-box {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 12px;
+            font-size: 16px;
+            margin: 5px;
+        }
+        input {
+            width: 60%;
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 5px;
+        }
+        button {
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #f40612;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .item {
+            background: #222;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #e50914;
+        }
+        .status {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 SmartView Search Test</h1>
+    
+    <div class="test-box">
+        <h2>Test Search Function</h2>
+        <input type="text" id="searchInput" placeholder="Try: action, dragon, 2024, love, comedy" value="action">
+        <button onclick="testSearch()">Search</button>
+        <button onclick="showAll()">Show All Content</button>
+    </div>
+
+    <div class="status" id="status">Ready to search...</div>
+
+    <div class="results" id="results"></div>
+
+    <script>
+        // Same content database from app.js
+        const contentDatabase = {
+            home: {
+                featured: [
+                    { id: 1, title: 'The Last Guardian', genre: 'Action', year: '2024', emoji: '⚔️', rating: '8.5' },
+                    { id: 2, title: 'Laugh Out Loud', genre: 'Comedy', year: '2024', emoji: '😂', rating: '7.8' },
+                    { id: 3, title: 'Space Odyssey 2099', genre: 'Sci-Fi', year: '2024', emoji: '🚀', rating: '9.1' },
+                    { id: 4, title: 'Forever Love', genre: 'Romance', year: '2024', emoji: '💕', rating: '7.5' },
+                    { id: 5, title: 'Midnight Terror', genre: 'Horror', year: '2024', emoji: '👻', rating: '7.9' },
+                    { id: 6, title: 'The Hidden Truth', genre: 'Thriller', year: '2024', emoji: '🔍', rating: '8.2' },
+                ],
+                trending: [
+                    { id: 7, title: 'Breaking Chains S01', genre: 'Drama', year: '2024', emoji: '📺', rating: '9.3' },
+                    { id: 8, title: 'Kingdom of Dragons', genre: 'Fantasy', year: '2024', emoji: '🐉', rating: '8.8' },
+                    { id: 9, title: 'Planet Earth 2024', genre: 'Documentary', year: '2024', emoji: '🌍', rating: '8.6' },
+                    { id: 10, title: 'Magical Journey', genre: 'Animation', year: '2024', emoji: '🎨', rating: '8.9' },
+                    { id: 11, title: 'Dark City Crimes', genre: 'Crime', year: '2024', emoji: '🕵️', rating: '8.7' },
+                    { id: 12, title: 'Live at Madison', genre: 'Music', year: '2024', emoji: '🎵', rating: '9.0' },
+                ]
+            },
+            movies: [
+                { id: 13, title: 'Explosive Revenge', genre: 'Action', year: '2024', emoji: '💥', rating: '8.4' },
+                { id: 14, title: 'The Silent Garden', genre: 'Drama', year: '2024', emoji: '🎭', rating: '7.6' },
+                { id: 15, title: 'Adventures Together', genre: 'Family', year: '2024', emoji: '👨‍👩‍👧‍👦', rating: '7.9' },
+                { id: 16, title: 'Wild West Justice', genre: 'Western', year: '2023', emoji: '🤠', rating: '8.1' },
+                { id: 17, title: 'Battle of Nations', genre: 'War', year: '2024', emoji: '⚔️', rating: '8.5' },
+                { id: 18, title: 'The Perfect Heist', genre: 'Crime', year: '2024', emoji: '💰', rating: '8.3' },
+                { id: 31, title: 'Speed Racer', genre: 'Action', year: '2024', emoji: '🏎️', rating: '7.8' },
+                { id: 32, title: 'Mystery Island', genre: 'Mystery', year: '2023', emoji: '🏝️', rating: '8.0' },
+                { id: 33, title: 'Cyber Attack', genre: 'Thriller', year: '2024', emoji: '💻', rating: '8.2' },
+                { id: 34, title: 'Love in Paris', genre: 'Romance', year: '2024', emoji: '🗼', rating: '7.7' },
+                { id: 35, title: 'Ghost Hunter', genre: 'Horror', year: '2024', emoji: '👽', rating: '7.4' },
+                { id: 36, title: 'Stand Up Special', genre: 'Comedy', year: '2024', emoji: '🎤', rating: '8.6' },
+            ],
+            shows: [
+                { id: 19, title: 'Family Matters S03', genre: 'Drama', year: '2024', emoji: '📺', rating: '9.2' },
+                { id: 20, title: 'The Funny Hour S05', genre: 'Comedy', year: '2024', emoji: '😄', rating: '8.7' },
+                { id: 21, title: 'Detective Files S02', genre: 'Mystery', year: '2024', emoji: '🔎', rating: '8.9' },
+                { id: 22, title: 'Survival Challenge', genre: 'Reality', year: '2024', emoji: '📹', rating: '7.4' },
+                { id: 23, title: 'Master Chef', genre: 'Food', year: '2024', emoji: '🍳', rating: '8.1' },
+                { id: 24, title: 'World Explorer', genre: 'Travel', year: '2024', emoji: '✈️', rating: '8.5' },
+                { id: 37, title: 'Medical Drama S04', genre: 'Drama', year: '2024', emoji: '⚕️', rating: '8.8' },
+                { id: 38, title: 'Tech Startup Story', genre: 'Drama', year: '2024', emoji: '💼', rating: '8.3' },
+                { id: 39, title: 'Nature Watch', genre: 'Documentary', year: '2024', emoji: '🦁', rating: '9.0' },
+                { id: 40, title: 'Fashion Week', genre: 'Reality', year: '2024', emoji: '👗', rating: '7.6' },
+            ],
+            anime: [
+                { id: 25, title: 'Demon Slayer Chronicles', genre: 'Action', year: '2024', emoji: '⚡', rating: '9.4' },
+                { id: 26, title: 'School Days', genre: 'Slice of Life', year: '2024', emoji: '🌸', rating: '8.6' },
+                { id: 27, title: 'Mecha Warriors', genre: 'Mecha', year: '2024', emoji: '🤖', rating: '8.8' },
+                { id: 28, title: 'First Love Story', genre: 'Romance', year: '2024', emoji: '💖', rating: '8.3' },
+                { id: 29, title: 'Dragon Quest Legends', genre: 'Fantasy', year: '2024', emoji: '🐉', rating: '9.1' },
+                { id: 30, title: 'Victory Volleyball', genre: 'Sports', year: '2024', emoji: '⚽', rating: '8.7' },
+                { id: 41, title: 'Ninja Academy', genre: 'Action', year: '2024', emoji: '🥷', rating: '8.9' },
+                { id: 42, title: 'Magic School', genre: 'Fantasy', year: '2024', emoji: '✨', rating: '8.5' },
+                { id: 43, title: 'Racing Thunder', genre: 'Sports', year: '2024', emoji: '🏁', rating: '8.4' },
+                { id: 44, title: 'Time Travelers', genre: 'Sci-Fi', year: '2023', emoji: '⏰', rating: '9.0' },
+            ],
+            trending: [
+                { id: 45, title: 'Viral Hit 2024', genre: 'Action', year: '2024', emoji: '🔥', rating: '9.5' },
+                { id: 46, title: 'Most Watched Series', genre: 'Drama', year: '2024', emoji: '📊', rating: '9.2' },
+                { id: 47, title: 'Blockbuster Movie', genre: 'Action', year: '2024', emoji: '🎬', rating: '8.9' },
+                { id: 48, title: 'Award Winner', genre: 'Drama', year: '2024', emoji: '🏆', rating: '9.4' },
+                { id: 49, title: 'Fan Favorite', genre: 'Fantasy', year: '2024', emoji: '⭐', rating: '9.1' },
+                { id: 50, title: 'Critics Choice', genre: 'Thriller', year: '2024', emoji: '🎯', rating: '8.8' },
+            ]
+        };
+
+        function testSearch() {
+            const query = document.getElementById('searchInput').value.trim();
+            const searchTerm = query.toLowerCase();
+            const allContent = [];
+            
+            // Gather all content
+            for (let category in contentDatabase) {
+                if (Array.isArray(contentDatabase[category])) {
+                    allContent.push(...contentDatabase[category]);
+                } else {
+                    for (let subcat in contentDatabase[category]) {
+                        if (Array.isArray(contentDatabase[category][subcat])) {
+                            allContent.push(...contentDatabase[category][subcat]);
+                        }
+                    }
+                }
+            }
+            
+            // Filter
+            const results = allContent.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.genre.toLowerCase().includes(searchTerm) ||
+                item.year.includes(searchTerm)
+            );
+            
+            // Display status
+            document.getElementById('status').innerHTML = `
+                📊 Searched for: "${query}"<br>
+                📚 Total content: ${allContent.length} items<br>
+                ✅ Results found: ${results.length} items
+            `;
+            
+            // Display results
+            if (results.length === 0) {
+                document.getElementById('results').innerHTML = '<div class="item">❌ No results found</div>';
+            } else {
+                document.getElementById('results').innerHTML = results.map(item => `
+                    <div class="item">
+                        ${item.emoji} <strong>${item.title}</strong><br>
+                        ${item.genre} • ${item.year} • ⭐ ${item.rating}
+                    </div>
+                `).join('');
+            }
+        }
+
+        function showAll() {
+            document.getElementById('searchInput').value = '';
+            testSearch();
+        }
+
+        // Allow Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') testSearch();
+        });
+
+        // Auto-run test on load
+        window.addEventListener('load', () => {
+            document.getElementById('status').innerHTML = '✅ Content database loaded! Try searching above.';
+        });
+    </script>
+</body>
+</html>
