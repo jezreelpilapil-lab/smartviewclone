@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartView 3.0.0 - App Information</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 25px;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 4px solid white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .version-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 1.1em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .apk-list {
+            list-style: none;
+        }
+
+        .apk-item {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .apk-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .apk-type {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .permissions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .permission-tag {
+            background: #e8eaf6;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            border: 1px solid #c5cae9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="icon.png" alt="SmartView Icon" class="app-icon">
+            <h1>SmartView</h1>
+            <div class="version-badge">Version 3.0.0</div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">📱 App Information</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-label">Package Name</div>
+                        <div class="info-value">com.browser.smartview.cine</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Version Code</div>
+                        <div class="info-value">30000</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Min SDK</div>
+                        <div class="info-value">Android 7.0 (API 24)</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-label">Target SDK</div>
+                        <div class="info-value">Android 14 (API 35)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📦 APK Components</h2>
+                <ul class="apk-list">
+                    <li class="apk-item">
+                        <span class="apk-name">com.browser.smartview.cine.apk</span>
+                        <span class="apk-type">Base APK</span>
+                    </li>
+                    <li class="apk-item">
+                        <span class="apk-name">config.arm64_v8a.apk</span>
+                        <span class="apk-type">ARM64</span>
+                    </li>
+                    <li class="apk-item">
+                        <span class="apk-name">config.xxhdpi.apk</span>
+                        <span class="apk-type">XXHDPI</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🔐 Key Permissions</h2>
+                <div class="permissions">
+                    <span class="permission-tag">📡 Internet Access</span>
+                    <span class="permission-tag">📶 Network State</span>
+                    <span class="permission-tag">📱 Phone State</span>
+                    <span class="permission-tag">📁 Storage (Read/Write)</span>
+                    <span class="permission-tag">📷 Camera</span>
+                    <span class="permission-tag">🎤 Audio Recording</span>
+                    <span class="permission-tag">🔔 Boot Receiver</span>
+                    <span class="permission-tag">⏰ Exact Alarms</span>
+                    <span class="permission-tag">💡 Flashlight</span>
+                    <span class="permission-tag">🔆 Display Brightness</span>
+                    <span class="permission-tag">⚡ Wake Lock</span>
+                    <span class="permission-tag">📊 System Overlay</span>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">APK Files</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">56.8 MB</div>
+                    <div class="stat-label">Total Size</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">30+</div>
+                    <div class="stat-label">Permissions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100+</div>
+                    <div class="stat-label">Locales</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📦 Extracted from SmartView_3.0.0_APKPure.xapk</p>
+            <p>🔗 Repository: <a href="https://github.com/jezreelpilapil-lab/smartviewclone.git" style="color: #667eea; text-decoration: none;">github.com/jezreelpilapil-lab/smartviewclone</a></p>
+        </div>
+    </div>
+</body>
+</html>
