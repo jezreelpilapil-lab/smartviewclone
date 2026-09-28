@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#667eea">
-    <meta name="description" content="SmartView - Your Smart Streaming Browser">
-    <title>SmartView - Web App</title>
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="description" content="SmartView - Fast Browsing & Privacy Protection">
+    <title>SmartView</title>
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="icon" href="../icon.png">
     <style>
@@ -16,305 +16,412 @@
         }
 
         :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --dark: #1a1a2e;
-            --darker: #16213e;
-            --light: #f8f9fa;
-            --accent: #ff6b6b;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-card: #222222;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #e50914;
+            --accent-hover: #f40612;
+            --border-color: #3a3a3a;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: var(--darker);
-            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
         }
 
+        /* Header */
         .header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 15px 20px;
+            background: var(--bg-secondary);
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
+        .menu-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            padding: 4px 8px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.4em;
-            font-weight: bold;
+            gap: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
         }
 
         .logo img {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
         }
 
         .search-container {
             flex: 1;
-            max-width: 600px;
-            margin: 0 20px;
+            max-width: 500px;
             position: relative;
         }
 
         .search-bar {
             width: 100%;
-            padding: 12px 45px 12px 15px;
-            border: none;
-            border-radius: 25px;
-            font-size: 15px;
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
+            padding: 10px 40px 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        .search-bar::placeholder {
+            color: var(--text-secondary);
         }
 
         .search-btn {
             position: absolute;
-            right: 5px;
+            right: 6px;
             top: 50%;
             transform: translateY(-50%);
-            background: var(--primary);
+            background: none;
             border: none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 20px;
             cursor: pointer;
-            font-weight: 600;
+            padding: 5px 10px;
         }
 
-        .nav-menu {
+        .icon-btns {
             display: flex;
-            gap: 20px;
-            align-items: center;
+            gap: 4px;
         }
 
-        .nav-btn {
+        .icon-btn {
             background: none;
             border: none;
             color: white;
             cursor: pointer;
-            font-size: 24px;
-            padding: 8px;
-            transition: transform 0.2s;
+            font-size: 22px;
+            padding: 6px 10px;
         }
 
-        .nav-btn:hover {
-            transform: scale(1.1);
+        /* Navigation Tabs */
+        .nav-tabs {
+            background: var(--bg-secondary);
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-color);
         }
 
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 14px 20px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .nav-tab.active {
+            color: var(--text-primary);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Main Content */
         .main-content {
-            padding: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
+            padding: 0;
         }
 
+        /* Video Player */
         .video-container {
             background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: none;
+        }
+
+        .video-container.show {
+            display: block;
         }
 
         .video-player {
             width: 100%;
             aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #434343 0%, #000000 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-size: 18px;
+            background: #000;
+            position: relative;
+        }
+
+        .video-player video,
+        .video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
 
         .video-controls {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 40px 16px 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .control-btn {
-            background: var(--primary);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .control-btn:hover {
-            background: var(--secondary);
+        .video-container:hover .video-controls {
+            opacity: 1;
         }
 
         .progress-bar {
-            flex: 1;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            overflow: hidden;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            margin-bottom: 12px;
             cursor: pointer;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
+            background: var(--accent);
             width: 0%;
-            background: var(--primary);
-            transition: width 0.1s;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .time-display {
+            color: white;
+            font-size: 13px;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        /* Content Grid */
+        .content-section {
+            padding: 20px 16px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
         }
 
         .section-title {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 1.3em;
+            font-weight: 600;
         }
 
-        .categories {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
-        .category-chip {
-            background: rgba(102, 126, 234, 0.2);
-            border: 2px solid var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.3s;
-        }
-
-        .category-chip:hover,
-        .category-chip.active {
-            background: var(--primary);
+        .see-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 16px;
+            }
         }
 
         .content-card {
-            background: var(--dark);
-            border-radius: 12px;
-            overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s;
         }
 
         .content-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transform: scale(1.05);
         }
 
-        .card-image {
+        .card-poster {
             width: 100%;
-            aspect-ratio: 16/9;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            aspect-ratio: 2/3;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-size: 48px;
         }
 
-        .card-content {
-            padding: 15px;
+        .card-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .content-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            font-size: 40px;
+            color: white;
         }
 
         .card-title {
-            font-size: 1.1em;
-            margin-bottom: 8px;
-            font-weight: 600;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
 
         .card-meta {
-            color: #aaa;
-            font-size: 0.9em;
-            display: flex;
-            gap: 15px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
         }
 
+        /* Sidebar */
         .sidebar {
             position: fixed;
-            right: -350px;
+            left: -280px;
             top: 0;
-            width: 350px;
+            width: 280px;
             height: 100vh;
-            background: var(--dark);
-            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.5);
-            transition: right 0.3s;
+            background: var(--bg-secondary);
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
+            transition: left 0.3s;
             z-index: 200;
             overflow-y: auto;
-            padding: 20px;
         }
 
         .sidebar.open {
-            right: 0;
+            left: 0;
         }
 
         .sidebar-header {
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+
+        .sidebar-title {
+            font-size: 1.3em;
+            font-weight: 600;
         }
 
         .close-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 28px;
+            font-size: 32px;
             cursor: pointer;
+            padding: 0;
+            line-height: 1;
         }
 
-        .menu-items {
-            list-style: none;
+        .menu-section {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .menu-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.3s;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 16px;
+            padding: 14px 20px;
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
         .menu-item:hover {
-            background: var(--primary);
+            background: rgba(255,255,255,0.1);
         }
 
+        .menu-icon {
+            font-size: 22px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .menu-label {
+            font-size: 15px;
+        }
+
+        /* Overlay */
         .overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: rgba(0, 0, 0, 0.7);
             display: none;
             z-index: 150;
@@ -324,159 +431,133 @@
             display: block;
         }
 
-        .url-input-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--dark);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            z-index: 250;
-            display: none;
-            width: 90%;
-            max-width: 500px;
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
         }
 
-        .url-input-modal.show {
-            display: block;
-        }
-
-        .modal-title {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        .url-input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--primary);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 15px;
-            margin-bottom: 20px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: flex-end;
-        }
-
-        .modal-btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .modal-btn.primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .modal-btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             .search-container {
-                margin: 10px 0;
+                max-width: none;
             }
-
-            .nav-menu {
-                gap: 10px;
-            }
-
-            .content-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 15px;
-            }
-
-            .sidebar {
-                width: 100%;
-                right: -100%;
+            
+            .logo span {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
         <div class="logo">
             <img src="../icon.png" alt="SmartView">
             <span>SmartView</span>
         </div>
         <div class="search-container">
-            <input type="text" class="search-bar" id="searchInput" placeholder="Search or enter URL...">
-            <button class="search-btn" onclick="handleSearch()">Go</button>
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search movies, shows, or enter URL...">
+            <button class="search-btn" onclick="handleSearch()">🔍</button>
         </div>
-        <div class="nav-menu">
-            <button class="nav-btn" onclick="showUrlModal()" title="Add URL">➕</button>
-            <button class="nav-btn" onclick="toggleSidebar()" title="Menu">☰</button>
+        <div class="icon-btns">
+            <button class="icon-btn" onclick="showBookmarks()" title="Bookmarks">⭐</button>
+            <button class="icon-btn" onclick="showHistory()" title="History">🕒</button>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="video-container" id="videoContainer" style="display: none;">
-            <div class="video-player" id="videoPlayer">
-                <div>🎬 Enter a URL to start streaming</div>
-            </div>
-            <div class="video-controls">
-                <button class="control-btn" onclick="playPause()">▶️ Play</button>
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <button class="control-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
-            </div>
-        </div>
-
-        <div class="categories">
-            <div class="category-chip active">🏠 Home</div>
-            <div class="category-chip">🎬 Movies</div>
-            <div class="category-chip">📺 TV Shows</div>
-            <div class="category-chip">⚡ Live</div>
-            <div class="category-chip">🎵 Music</div>
-            <div class="category-chip">🎮 Gaming</div>
-            <div class="category-chip">📰 News</div>
-        </div>
-
-        <h2 class="section-title">📺 Featured Content</h2>
-        <div class="content-grid" id="contentGrid"></div>
-
-        <h2 class="section-title">🔥 Trending Now</h2>
-        <div class="content-grid" id="trendingGrid"></div>
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('home', this)">Home</button>
+        <button class="nav-tab" onclick="switchTab('movies', this)">Movies</button>
+        <button class="nav-tab" onclick="switchTab('shows', this)">TV Shows</button>
+        <button class="nav-tab" onclick="switchTab('anime', this)">Anime</button>
+        <button class="nav-tab" onclick="switchTab('trending', this)">Trending</button>
+        <button class="nav-tab" onclick="switchTab('browse', this)">Browse</button>
     </div>
 
+    <!-- Video Player -->
+    <div class="video-container" id="videoContainer">
+        <div class="video-player" id="videoPlayer"></div>
+        <div class="video-controls">
+            <div class="progress-bar" onclick="seek(event)">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="controls-row">
+                <button class="control-btn" id="playPauseBtn" onclick="playPause()">▶️</button>
+                <span class="time-display" id="timeDisplay">0:00 / 0:00</span>
+                <div class="spacer"></div>
+                <button class="control-btn" onclick="toggleMute()">🔊</button>
+                <button class="control-btn" onclick="toggleFullscreen()">⛶</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Content sections will be dynamically loaded here -->
+    </div>
+
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>Menu</h2>
+            <div class="sidebar-logo">
+                <img src="../icon.png" alt="SmartView">
+                <span class="sidebar-title">SmartView</span>
+            </div>
             <button class="close-btn" onclick="toggleSidebar()">×</button>
         </div>
-        <ul class="menu-items">
-            <li class="menu-item">📚 Library</li>
-            <li class="menu-item">⭐ Favorites</li>
-            <li class="menu-item">📥 Downloads</li>
-            <li class="menu-item">📜 History</li>
-            <li class="menu-item">⚙️ Settings</li>
-            <li class="menu-item">ℹ️ About</li>
-        </ul>
-    </div>
+        
+        <div class="menu-section">
+            <div class="menu-item" onclick="switchTab('home'); toggleSidebar();">
+                <span class="menu-icon">🏠</span>
+                <span class="menu-label">Home</span>
+            </div>
+            <div class="menu-item" onclick="switchTab('movies'); toggleSidebar();">
+                <span class="menu-icon">🎬</span>
+                <span class="menu-label">Movies</span>
+            </div>
+            <div class="menu-item" onclick="switchTab('shows'); toggleSidebar();">
+                <span class="menu-icon">📺</span>
+                <span class="menu-label">TV Shows</span>
+            </div>
+            <div class="menu-item" onclick="switchTab('anime'); toggleSidebar();">
+                <span class="menu-icon">🎌</span>
+                <span class="menu-label">Anime</span>
+            </div>
+        </div>
 
-    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+        <div class="menu-section">
+            <div class="menu-item" onclick="showBookmarks(); toggleSidebar();">
+                <span class="menu-icon">⭐</span>
+                <span class="menu-label">Bookmarks</span>
+            </div>
+            <div class="menu-item" onclick="showHistory(); toggleSidebar();">
+                <span class="menu-icon">🕒</span>
+                <span class="menu-label">History</span>
+            </div>
+            <div class="menu-item" onclick="showDownloads(); toggleSidebar();">
+                <span class="menu-icon">📥</span>
+                <span class="menu-label">Downloads</span>
+            </div>
+        </div>
 
-    <div class="url-input-modal" id="urlModal">
-        <h3 class="modal-title">Enter Streaming URL</h3>
-        <input type="url" class="url-input" id="urlInput" placeholder="https://example.com/stream.m3u8">
-        <div class="modal-buttons">
-            <button class="modal-btn secondary" onclick="closeUrlModal()">Cancel</button>
-            <button class="modal-btn primary" onclick="loadUrl()">Load</button>
+        <div class="menu-section">
+            <div class="menu-item" onclick="showSettings(); toggleSidebar();">
+                <span class="menu-icon">⚙️</span>
+                <span class="menu-label">Settings</span>
+            </div>
+            <div class="menu-item" onclick="showAbout(); toggleSidebar();">
+                <span class="menu-icon">ℹ️</span>
+                <span class="menu-label">About</span>
+            </div>
         </div>
     </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
     <script src="app.js"></script>
 </body>
